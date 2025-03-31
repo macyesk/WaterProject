@@ -1,29 +1,28 @@
-import { useState } from 'react';
 import './App.css';
-import CategoryFilter from './CategoryFilter';
-import ProjectList from './ProjectList';
-import WelcomeBand from './WelcomeBand';
+import ProjectsPage from './pages/ProjectsPage';
+import DonatePage from './pages/DonatePage';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import CartPage from './pages/CartPage';
+import { CartProvider } from './context/CartContext';
+import AdminProjectsPage from './pages/AdminProjectsPage';
 
 function App() {
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   return (
     <>
-      <div className="container">
-        <div className="row bg-primary text-white">
-          <WelcomeBand />
-        </div>
-        <div className="row">
-          <div className="col-4">
-            <CategoryFilter
-              selectedCategories={selectedCategories}
-              setSelectedCategories={setSelectedCategories}
+      <CartProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<ProjectsPage />} />
+            <Route path="/projects" element={<ProjectsPage />} />
+            <Route
+              path="/donate/:projectName/:projectId"
+              element={<DonatePage />}
             />
-          </div>
-          <div className="col-8">
-            <ProjectList selectedCategories={selectedCategories} />
-          </div>
-        </div>
-      </div>
+            <Route path="/cart" element={<CartPage />}></Route>
+            <Route path="/adminprojects" element={<AdminProjectsPage />} />
+          </Routes>
+        </Router>
+      </CartProvider>
     </>
   );
 }
