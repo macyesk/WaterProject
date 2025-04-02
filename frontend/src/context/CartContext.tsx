@@ -2,7 +2,6 @@ import {
   createContext,
   ReactNode,
   useContext,
-  useEffect,
   useState,
 } from 'react';
 import { CartItem } from '../types/CartItem';
