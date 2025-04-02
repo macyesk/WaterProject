@@ -258,3 +258,4 @@
 /Users/macyeskelsen/Desktop/WaterProject/backend/WaterProject.API/obj/Debug/net8.0/WaterProject.API.genruntimeconfig.cache
 /Users/macyeskelsen/Desktop/WaterProject/backend/WaterProject.API/obj/Debug/net8.0/ref/WaterProject.API.dll
 /Users/macyeskelsen/Desktop/WaterProject/backend/WaterProject.API/obj/Debug/net8.0/WaterProject.API.sourcelink.json
+/Users/macyeskelsen/Desktop/WaterProject/backend/WaterProject.API/bin/Debug/net8.0/WaterProject.sqlite
