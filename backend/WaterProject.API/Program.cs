@@ -15,7 +15,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp", policy =>
     {
-        policy.WithOrigins("https://waterproject-macy-backend.azurewebsites.net").AllowCredentials().AllowAnyHeader().AllowAnyMethod();
+        policy.AllowAnyOrigin().AllowCredentials().AllowAnyHeader().AllowAnyMethod();
     });
 });
 var app = builder.Build();
