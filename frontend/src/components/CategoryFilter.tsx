@@ -14,7 +14,7 @@ function CategoryFilter({
     const fetchCategories = async () => {
       try {
         const response = await fetch(
-          'http://localhost:5106/water/getprojecttypes'
+          'https://waterproject-macy-backend.azurewebsites.net/water/getprojecttypes'
         );
         const data = await response.json();
         console.log('Fetched categories: ', data);
