@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Project } from '../types/Project';
-import { fetchProjects } from '../api/ProjectsAPI';
+import { deleteProject, fetchProjects } from '../api/ProjectsAPI';
 import Pagination from '../components/Pagination';
 import NewProjectForm from '../components/NewProjectForm';
+import EditProjectForm from '../components/EditProjectForm';
 
 function AdminProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -13,6 +14,7 @@ function AdminProjectsPage() {
   const [totalItems, setTotalItems] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [showForm, setShowForm] = useState(false);
+  const [editingProject, setEditingProject] = useState<Project | null>(null);
 
   useEffect(() => {
     const loadProjects = async () => {
@@ -29,6 +31,19 @@ function AdminProjectsPage() {
 
     loadProjects();
   }, [pageSize, pageNum]);
+
+  const handleDelete = async (projectId: number) => {
+    const confirmDelete = window.confirm(
+      'Are you sure you want to delete this project?'
+    );
+    if (!confirmDelete) return;
+    try {
+      await deleteProject(projectId);
+      setProjects(projects.filter((p) => p.projectId !== projectId));
+    } catch (error) {
+      alert('Failed to delete project. Please try again.');
+    }
+  };
 
   if (loading) return <p>Loading projects...</p>;
   if (error) return <p className="text-red-500">Error: {error}</p>;
@@ -59,6 +74,19 @@ function AdminProjectsPage() {
           />
         )}
 
+        {editingProject && (
+          <EditProjectForm
+            project={editingProject}
+            onSuccess={() => {
+              setEditingProject(null);
+              fetchProjects(pageSize, pageNum, []).then((data) =>
+                setProjects(data.projects)
+              );
+            }}
+            onCancel={() => setEditingProject(null)}
+          />
+        )}
+
         <table>
           <thead>
             <tr>
@@ -84,13 +112,15 @@ function AdminProjectsPage() {
                 <td>{p.projectFunctionalityStatus}</td>
                 <td>
                   <button
-                    onClick={() => console.log(`Edit project ${p.projectId}`)}
+                    onClick={() => {
+                      setEditingProject(p);
+                    }}
                     className="btn btn-success"
                   >
                     Edit
                   </button>
                   <button
-                    onClick={() => console.log(`Delete project ${p.projectId}`)}
+                    onClick={() => handleDelete(p.projectId)}
                     className="btn btn-danger"
                   >
                     Delete

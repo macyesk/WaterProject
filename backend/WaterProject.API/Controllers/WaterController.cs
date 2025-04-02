@@ -59,7 +59,7 @@ namespace WaterProject.API.Controllers
             return Ok(projectTypes);
         }
 
-        [HttpPost("Add")]
+        [HttpPost("AddProject")]
         public IActionResult AddProject([FromBody] Project newProject) {
             _context.Projects.Add(newProject);
             _context.SaveChanges();
@@ -69,18 +69,18 @@ namespace WaterProject.API.Controllers
         [HttpPut("UpdateProject/{projectId}")]
         public IActionResult UpdateProject(int projectId, [FromBody] Project updateProject){
             var existingProject = _context.Projects.Find(projectId);
-            existingProject.ProjectName = updatedProject.ProjectName;
-            existingProject.ProjectType = updatedProject.ProjectType;
-            existingProject.ProjectImpact = updatedProject.ProjectImpact;
-            existingProject.ProjectPhase = updatedProject.ProjectPhase;
-            existingProject.ProjectFunctionalityStatus = updatedProject.ProjectFunctionalityStatus;
+            existingProject.ProjectName = updateProject.ProjectName;
+            existingProject.ProjectType = updateProject.ProjectType;
+            existingProject.ProjectImpact = updateProject.ProjectImpact;
+            existingProject.ProjectPhase = updateProject.ProjectPhase;
+            existingProject.ProjectFunctionalityStatus = updateProject.ProjectFunctionalityStatus;
 
             _context.Projects.Update(existingProject);
             _context.SaveChanges();
             return Ok(existingProject);
         }
 
-        [HttpDelete("/DeleteProject/{projectId}")]
+        [HttpDelete("DeleteProject/{projectId}")]
         public IActionResult DeleteProject(int projectId) 
         {
             var project = _context.Projects.Find(projectId);
